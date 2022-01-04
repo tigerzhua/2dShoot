@@ -22,8 +22,12 @@ namespace Shooter {
 		if (gameStatus_ == GameStatus::InGame) {
 			world_.Update(delta, inputData);
 			if (world_.IsGameEnded()) {
-				ToMainMenu();
+				ToEndScreen();
 				world_.Clear();
+			}
+		} else if (gameStatus_ == GameStatus::EndScreen) {
+			if (inputData.endGame) {
+				ToMainMenu();
 			}
 		} else if (gameStatus_ == GameStatus::MainMenu) {
 			if (inputData.startGame) {
@@ -38,6 +42,8 @@ namespace Shooter {
 		if (gameStatus_ == GameStatus::InGame) {
 			// TBD
 		} else if (gameStatus_ == GameStatus::MainMenu) {
+			// TBD
+		} else if (gameStatus_ == GameStatus::EndScreen) {
 			// TBD
 		}
 	}
@@ -62,6 +68,14 @@ namespace Shooter {
 		inputManager_.SetPlayer(player);
 	}
 
+	void System::ToEndScreen() {
+		if (gameStatus_ != GameStatus::InGame) {
+			return;
+		}
+
+		gameStatus_ = GameStatus::EndScreen;
+	}
+
 	void System::ToMainMenu() {
 		if (gameStatus_ == GameStatus::MainMenu) {
 			return;
@@ -69,7 +83,8 @@ namespace Shooter {
 
 		gameStatus_ = GameStatus::MainMenu;
 	}
-
+	
+	// Includes rendering menu UI in different game status
 	std::vector<RenderEntry> System::GenerateRenderEntries() {
 		std::vector<RenderEntry> result = std::vector<RenderEntry>();
 
@@ -107,7 +122,21 @@ namespace Shooter {
 			RenderEntry instructionEntry = RenderEntry();
 			instructionEntry.isText = true;
 			instructionEntry.position = Vector2(200.0f, 600.0f);
-			instructionEntry.text = "Press Enter to Start";
+			instructionEntry.text = "Press Enter to start";
+			instructionEntry.fontSize = 20;
+			result.push_back(instructionEntry);
+		} else if (gameStatus_ == GameStatus::EndScreen) {
+			RenderEntry gameOverTextEntry = RenderEntry();
+			gameOverTextEntry.isText = true;
+			gameOverTextEntry.position = Vector2(200.0f, 500.0f);
+			gameOverTextEntry.text = "Game Over";
+			gameOverTextEntry.fontSize = 40;
+			result.push_back(gameOverTextEntry);
+
+			RenderEntry instructionEntry = RenderEntry();
+			instructionEntry.isText = true;
+			instructionEntry.position = Vector2(200.0f, 600.0f);
+			instructionEntry.text = "Press Space to continue";
 			instructionEntry.fontSize = 20;
 			result.push_back(instructionEntry);
 		}

@@ -11,9 +11,11 @@ namespace Shooter {
 			Vector2 playerDir;
 			bool fire = false;
 			bool startGame = false;
+			bool endGame = false;
 			InputData() {
 				fire = false;
 				startGame = false;
+				endGame = false;
 			}
 	};
 

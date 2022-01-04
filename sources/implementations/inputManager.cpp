@@ -47,6 +47,10 @@ namespace Shooter {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) {
 			inputData_.startGame = true;
 		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
+			inputData_.endGame = true;
+		}
 		//Debug
 		//std::cout << inputData_.playerDir.ToString() << std::endl;
 	}

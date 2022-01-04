@@ -12,6 +12,7 @@ namespace Shooter {
 	enum class GameStatus {
 		MainMenu,
 		InGame,
+		EndScreen,
 	};
 
 	// the graphic "system"
@@ -22,6 +23,7 @@ namespace Shooter {
 			void Update(sf::Time delta);
 			void UpdateUI(sf::Time delta);
 			void ToGame();
+			void ToEndScreen();
 			void ToMainMenu();
 			std::vector<RenderEntry> GenerateRenderEntries();
 
