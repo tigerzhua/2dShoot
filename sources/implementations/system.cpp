@@ -6,6 +6,8 @@
 namespace Shooter {
 	System::System() {
 		gameStatus_ = GameStatus::MainMenu;
+		// init level data
+		LoadLevelData();
 
 		AssetUtils::LoadTexture("bar.png", hpBarTexture_);
 		std::cout << "System Init complete" << std::endl;
@@ -22,8 +24,22 @@ namespace Shooter {
 		if (gameStatus_ == GameStatus::InGame) {
 			world_.Update(delta, inputData);
 			if (world_.IsGameEnded()) {
-				ToEndScreen();
+				curLevelIdx += 1;
+				if (curLevelIdx < levelsData_.size()) {
+					ToInbetweenLevel();
+				} else {
+					ToEndScreen();
+				}
 				world_.Clear();
+			}
+		} else if (gameStatus_ == GameStatus::BetweenLevel) {
+			if (inputData.startGame) {
+				if (curLevelIdx < levelsData_.size()) {
+					ToGame();
+				} else {
+					// This should not happen
+					ToEndScreen();
+				}
 			}
 		} else if (gameStatus_ == GameStatus::EndScreen) {
 			if (inputData.endGame) {
@@ -45,6 +61,8 @@ namespace Shooter {
 			// TBD
 		} else if (gameStatus_ == GameStatus::EndScreen) {
 			// TBD
+		} else if (gameStatus_ == GameStatus::BetweenLevel) {
+			// TBD
 		}
 	}
 
@@ -64,8 +82,12 @@ namespace Shooter {
 
 		world_.SetPlayer(playerEntry);
 		world_.SetSize(Vector2(kDefaultScreenWidth, kDefaultScreenHeight));
-		DebugSetupTestLevel();
+		SetupLevel(curLevelIdx);
 		inputManager_.SetPlayer(player);
+	}
+
+	void System::ToInbetweenLevel() {
+		gameStatus_ = GameStatus::BetweenLevel;
 	}
 
 	void System::ToEndScreen() {
@@ -139,12 +161,73 @@ namespace Shooter {
 			instructionEntry.text = "Press Space to continue";
 			instructionEntry.fontSize = 20;
 			result.push_back(instructionEntry);
+		} else if (gameStatus_ == GameStatus::BetweenLevel) {
+			RenderEntry titleTextEntry = RenderEntry();
+			titleTextEntry.isText = true;
+			titleTextEntry.position = Vector2(200.0f, 500.0f);
+			titleTextEntry.text = "Level " + std::to_string(curLevelIdx + 1);
+			titleTextEntry.fontSize = 40;
+			result.push_back(titleTextEntry);
+
+			RenderEntry instructionEntry = RenderEntry();
+			instructionEntry.isText = true;
+			instructionEntry.position = Vector2(200.0f, 600.0f);
+			instructionEntry.text = "Press Enter to start";
+			instructionEntry.fontSize = 20;
+			result.push_back(instructionEntry);
 		}
 
 		return result;
 	}
 
+	void System::SetupLevel(int idx) {
+		if (idx < 0 || idx >= levelsData_.size()) {
+			std::cout << "System: No level at idx " << idx << std::endl;
+			return;
+		}
+
+		for (int i = 0; i < levelsData_[idx].entities.size(); ++i) {
+			Unit* enemyUnitRef = Unit::GetDefaultEnemyUnit();
+			// Must contain the string "Enemy"
+			std::string enemyId = "Enemy" + std::to_string(i);
+			UnitEntry enemy = UnitEntry(enemyId, enemyUnitRef, levelsData_[idx].entities[i].position);
+			enemy.fireCD = levelsData_[idx].entities[i].fireCD;
+			world_.AddUnitEntry(enemy, false);
+		}
+	}
+
 	void System::DebugSetupTestLevel() {
 		world_.DebugSetupTestLevel();
 	}
+
+	void System::LoadLevelData() {
+		// Test level at idx 0
+		LevelData singleLevelData = LevelData();
+		LevelEntity entity;
+		entity.position = Vector2(400.0f, 400.0f);
+		entity.fireCD = 2.0f;
+		singleLevelData.entities.push_back(entity);
+
+		LevelEntity entity2;
+		entity2.position = Vector2(300.0f, 500.0f);
+		entity2.fireCD = 1.5f;
+		singleLevelData.entities.push_back(entity2);
+
+		levelsData_.push_back(singleLevelData);
+
+		// TODO: read level data from text
+		LevelData singleLevelData2 = LevelData();
+		LevelEntity entity3;
+		entity3.position = Vector2(400.0f, 600.0f);
+		entity3.fireCD = 2.0f;
+		singleLevelData2.entities.push_back(entity3);
+
+		LevelEntity entity4;
+		entity4.position = Vector2(300.0f, 500.0f);
+		entity4.fireCD = 1.5f;
+		singleLevelData2.entities.push_back(entity4);
+
+		levelsData_.push_back(singleLevelData2);
+	}
+
 }

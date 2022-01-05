@@ -78,11 +78,11 @@ namespace Shooter {
 			bool IsPlayerDead();
 
 			void DebugSetupTestLevel();
-
+			std::map<std::string, UnitEntry> unitEntries_;
 		protected:
 		private:
 			Vector2 worldSize_;
-			std::map<std::string, UnitEntry> unitEntries_;
+			//std::map<std::string, UnitEntry> unitEntries_;
 			std::map<std::string, UnitEntry> projectiles_;
 			UnitEntry* playerEntry_ = nullptr;
 			sf::Time elapsedTime_;
