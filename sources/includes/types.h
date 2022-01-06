@@ -43,4 +43,17 @@ namespace Shooter {
 				text = "";
 			}
 	};
+
+	struct LevelEntity {
+		Vector2 position;
+		float fireCD;
+	};
+
+	struct LevelData {
+		std::vector<LevelEntity> entities;
+
+		LevelData() {
+			entities = std::vector<LevelEntity>();
+		}
+	};
 }

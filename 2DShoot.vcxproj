@@ -150,6 +150,7 @@
     <ClCompile Include="sources\implementations\bullet.cpp" />
     <ClCompile Include="sources\implementations\graphics.cpp" />
     <ClCompile Include="sources\implementations\inputManager.cpp" />
+    <ClCompile Include="sources\implementations\levelReader.cpp" />
     <ClCompile Include="sources\implementations\player.cpp" />
     <ClCompile Include="sources\implementations\system.cpp" />
     <ClCompile Include="sources\implementations\unit.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="sources\includes\debugManager.h" />
     <ClInclude Include="sources\includes\graphics.h" />
     <ClInclude Include="sources\includes\inputManager.h" />
+    <ClInclude Include="sources\includes\levelReader.h" />
     <ClInclude Include="sources\includes\player.h" />
     <ClInclude Include="sources\includes\system.h" />
     <ClInclude Include="sources\includes\systemConsts.h" />

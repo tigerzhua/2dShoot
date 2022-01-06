@@ -1,5 +1,6 @@
 #include "includes/system.h"
 
+#include "includes/levelReader.h"
 #include "includes/player.h"
 #include "includes/systemConsts.h"
 
@@ -216,6 +217,9 @@ namespace Shooter {
 		levelsData_.push_back(singleLevelData);
 
 		// TODO: read level data from text
+		LevelReader levelReader;
+		levelReader.ReadFile("levels.txt");
+
 		LevelData singleLevelData2 = LevelData();
 		LevelEntity entity3;
 		entity3.position = Vector2(400.0f, 600.0f);

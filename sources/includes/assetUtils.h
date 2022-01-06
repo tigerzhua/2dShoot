@@ -11,5 +11,6 @@ namespace Shooter {
 
 			static void LoadTexture(std::string filePath, sf::Texture& texture);
 			static void LoadFont(std::string filePath, sf::Font& font);
+			static std::string GetFullPath(std::string filePath);
 	};
 }

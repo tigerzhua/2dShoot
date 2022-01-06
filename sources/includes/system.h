@@ -18,15 +18,6 @@ namespace Shooter {
 		EndScreen,
 	};
 
-	struct LevelEntity {
-		Vector2 position;
-		float fireCD;
-	};
-
-	struct LevelData {
-		std::vector<LevelEntity> entities;
-	};
-
 	// the graphic "system"
 	class System {
 		public:

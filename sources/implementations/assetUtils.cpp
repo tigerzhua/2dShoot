@@ -16,4 +16,8 @@ namespace Shooter {
 			std::cout << "[Error]AssetUtils::LoadFont unable to load font: " << filePath << std::endl;
 		}
 	}
+
+	std::string AssetUtils::GetFullPath(std::string filePath) {
+		return assetFolder + "\\" + filePath;
+	}
 }

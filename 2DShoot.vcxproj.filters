@@ -51,6 +51,9 @@
     <ClCompile Include="sources\implementations\unitTests.cpp">
       <Filter>Source Files\implementations</Filter>
     </ClCompile>
+    <ClCompile Include="sources\implementations\levelReader.cpp">
+      <Filter>Source Files\implementations</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gameConsts.h">
@@ -93,6 +96,9 @@
       <Filter>Source Files\includes</Filter>
     </ClInclude>
     <ClInclude Include="sources\includes\unitTests.h">
+      <Filter>Source Files\includes</Filter>
+    </ClInclude>
+    <ClInclude Include="sources\includes\levelReader.h">
       <Filter>Source Files\includes</Filter>
     </ClInclude>
   </ItemGroup>
