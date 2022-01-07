@@ -4,3 +4,10 @@ Enemy: (400, 500), 2.0
 Enemy: (300, 300), 1.5
 level_end
 
+level: level2
+Enemy: (500, 300), 1.5
+Enemy: (400, 500), 2.0
+Enemy: (300, 500), 1.5
+Enemy: (300, 400), 2.5
+level_end
+

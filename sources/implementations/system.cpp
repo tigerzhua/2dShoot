@@ -105,6 +105,7 @@ namespace Shooter {
 		}
 
 		gameStatus_ = GameStatus::MainMenu;
+		curLevelIdx = 0;
 	}
 	
 	// Includes rendering menu UI in different game status
@@ -216,22 +217,13 @@ namespace Shooter {
 
 		levelsData_.push_back(singleLevelData);
 
-		// TODO: read level data from text
+		// read level data from text
 		LevelReader levelReader;
 		levelReader.ReadFile("levels.txt");
 
-		LevelData singleLevelData2 = LevelData();
-		LevelEntity entity3;
-		entity3.position = Vector2(400.0f, 600.0f);
-		entity3.fireCD = 2.0f;
-		singleLevelData2.entities.push_back(entity3);
-
-		LevelEntity entity4;
-		entity4.position = Vector2(300.0f, 500.0f);
-		entity4.fireCD = 1.5f;
-		singleLevelData2.entities.push_back(entity4);
-
-		levelsData_.push_back(singleLevelData2);
+		for (int i = 0; i < levelReader.GetData().size(); ++i) {
+			levelsData_.push_back(levelReader.GetData()[i]);
+		}
 	}
 
 }
