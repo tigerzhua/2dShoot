@@ -58,7 +58,7 @@ namespace Shooter {
 	class World {
 		public:
 			World();
-			void SetSize(Vector2 newSize) { worldSize_ = newSize; }
+			void SetSize(Vector2 newSize);
 			void Clear();
 			void OnStart();
 			void Update(sf::Time delta, InputData& inputData);

@@ -48,6 +48,10 @@ namespace Shooter {
 		}
 	}
 
+	void World::SetSize(Vector2 newSize) {
+		worldSize_ = Vector2(newSize.x - 35.0f, newSize.y - 50.0f); 
+	}
+
 	void World::OnStart() {
 		elapsedTime_ = sf::Time(sf::seconds(0.0f));
 	}
