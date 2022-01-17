@@ -88,6 +88,20 @@ namespace Shooter {
 			}
 		}
 
+		if (playerEntry_ != nullptr) {
+			if (IsOutOfWorld(*playerEntry_)) {
+				if (playerEntry_->position.x > worldSize_.x) {
+					playerEntry_->position.x = worldSize_.x;
+				} else if (playerEntry_->position.x < 0.0f) {
+					playerEntry_->position.x = 0.0f;
+				} else if (playerEntry_->position.y > worldSize_.y) {
+					playerEntry_->position.y = worldSize_.y;
+				} else if (playerEntry_->position.y < 0.0f) {
+					playerEntry_->position.y = 0.0f;
+				}
+			}
+		}
+
 		std::vector<std::string> toRemoveProjectile;
 		for (std::map<std::string, UnitEntry>::iterator it = projectiles_.begin(); it != projectiles_.end(); ++it) {
 			UnitEntry& entry = it->second;
