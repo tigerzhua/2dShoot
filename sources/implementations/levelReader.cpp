@@ -8,6 +8,8 @@ namespace Shooter {
     }
 
 	void LevelReader::ReadFile(std::string fileName) {
+        std::cout << "[LevelReader]: Reading file " << fileName << std::endl;
+
         std::string line;
         std::ifstream myfile(AssetUtils::GetFullPath(fileName));
         if (myfile.is_open()) {
@@ -15,9 +17,11 @@ namespace Shooter {
             while (getline(myfile, line)) {
                 if (line.find(kLevel) != std::string::npos && line.find(kLevelEnd) == std::string::npos) {
                     // level starts
+                    std::cout << "[LevelReader] New Level Starts." << std::endl;
                     curLevelData = LevelData();
                 } else if (line.find(kLevelEnd) != std::string::npos) {
                     // level ends
+                    std::cout << "[LevelReader] New Level Ends." << std::endl << std::endl;
                     storage_.push_back(curLevelData);
                 } else if (line.find(kEnemy) != std::string::npos){
                     // An enemy
@@ -41,6 +45,7 @@ namespace Shooter {
                     levelEntity.fireCD = std::stof(cdString);
 
                     curLevelData.entities.push_back(levelEntity);
+                    std::cout<< "[LevelReader] Added new Enemy: position " << levelEntity.position.ToString() << ", Firing CD: " << levelEntity.fireCD << std::endl;
                 }
             }
             myfile.close();

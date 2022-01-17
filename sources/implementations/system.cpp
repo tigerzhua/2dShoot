@@ -204,6 +204,7 @@ namespace Shooter {
 
 	void System::LoadLevelData() {
 		// Test level at idx 0
+		/*
 		LevelData singleLevelData = LevelData();
 		LevelEntity entity;
 		entity.position = Vector2(400.0f, 400.0f);
@@ -216,6 +217,7 @@ namespace Shooter {
 		singleLevelData.entities.push_back(entity2);
 
 		levelsData_.push_back(singleLevelData);
+		*/
 
 		// read level data from text
 		LevelReader levelReader;
