@@ -24,13 +24,16 @@ namespace Shooter {
 
 		if (gameStatus_ == GameStatus::InGame) {
 			world_.Update(delta, inputData);
-			if (world_.IsGameEnded()) {
+			if (world_.IsGameEnded() && !world_.IsPlayerDead()) {
 				curLevelIdx += 1;
 				if (curLevelIdx < levelsData_.size()) {
 					ToInbetweenLevel();
 				} else {
 					ToEndScreen();
 				}
+				world_.Clear();
+			} else if (world_.IsGameEnded() && world_.IsPlayerDead()) {
+				ToEndScreen();
 				world_.Clear();
 			}
 		} else if (gameStatus_ == GameStatus::BetweenLevel) {
