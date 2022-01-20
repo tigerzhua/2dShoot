@@ -58,7 +58,7 @@ namespace Shooter {
 	class World {
 		public:
 			World();
-			void SetSize(Vector2 newSize) { worldSize_ = newSize; }
+			void SetSize(Vector2 newSize);
 			void Clear();
 			void OnStart();
 			void Update(sf::Time delta, InputData& inputData);
@@ -74,6 +74,7 @@ namespace Shooter {
 			std::vector<UnitEntry> GetActiveUnits();
 			float GetPlayerHealthRatio();
 			bool IsOutOfWorld(UnitEntry& entry);
+			static bool IsOutOfWorld(Vector2 worldBound, Vector2 position);
 			bool IsGameEnded();
 			bool IsPlayerDead();
 

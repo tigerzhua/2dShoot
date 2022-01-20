@@ -221,6 +221,7 @@ namespace Shooter {
 
 		// read level data from text
 		LevelReader levelReader;
+		levelReader.SetWorldBound(Vector2(kDefaultScreenWidth, kDefaultScreenHeight));
 		levelReader.ReadFile("levels.txt");
 
 		for (int i = 0; i < levelReader.GetData().size(); ++i) {

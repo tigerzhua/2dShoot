@@ -48,6 +48,10 @@ namespace Shooter {
 		}
 	}
 
+	void World::SetSize(Vector2 newSize) {
+		worldSize_ = Vector2(newSize.x - 35.0f, newSize.y - 50.0f); 
+	}
+
 	void World::OnStart() {
 		elapsedTime_ = sf::Time(sf::seconds(0.0f));
 	}
@@ -84,6 +88,20 @@ namespace Shooter {
 					if (entry.CanFire()) {
 						Fire(entry, Unit::GetDefaultEnemyProjectile(), Vector2(0.0f, 1.0f));
 					}
+				}
+			}
+		}
+
+		if (playerEntry_ != nullptr) {
+			if (IsOutOfWorld(*playerEntry_)) {
+				if (playerEntry_->position.x > worldSize_.x) {
+					playerEntry_->position.x = worldSize_.x;
+				} else if (playerEntry_->position.x < 0.0f) {
+					playerEntry_->position.x = 0.0f;
+				} else if (playerEntry_->position.y > worldSize_.y) {
+					playerEntry_->position.y = worldSize_.y;
+				} else if (playerEntry_->position.y < 0.0f) {
+					playerEntry_->position.y = 0.0f;
 				}
 			}
 		}
@@ -221,6 +239,10 @@ namespace Shooter {
 
 	bool World::IsOutOfWorld(UnitEntry& entry) {
 		return entry.position.x > worldSize_.x || entry.position.x < 0.0f || entry.position.y > worldSize_.y || entry.position.y < 0.0f;
+	}
+
+	bool  World::IsOutOfWorld(Vector2 worldBound, Vector2 position) {
+		return position.x > worldBound.x || position.x < 0.0f || position.y > worldBound.y || position.y < 0.0f;
 	}
 
 	bool World::IsGameEnded() {
