@@ -74,6 +74,7 @@ namespace Shooter {
 			std::vector<UnitEntry> GetActiveUnits();
 			float GetPlayerHealthRatio();
 			bool IsOutOfWorld(UnitEntry& entry);
+			static bool IsOutOfWorld(Vector2 worldBound, Vector2 position);
 			bool IsGameEnded();
 			bool IsPlayerDead();
 

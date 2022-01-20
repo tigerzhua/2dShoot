@@ -241,6 +241,10 @@ namespace Shooter {
 		return entry.position.x > worldSize_.x || entry.position.x < 0.0f || entry.position.y > worldSize_.y || entry.position.y < 0.0f;
 	}
 
+	bool  World::IsOutOfWorld(Vector2 worldBound, Vector2 position) {
+		return position.x > worldBound.x || position.x < 0.0f || position.y > worldBound.y || position.y < 0.0f;
+	}
+
 	bool World::IsGameEnded() {
 		return unitEntries_.size() == 0 || IsPlayerDead();
 	}

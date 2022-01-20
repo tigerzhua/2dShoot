@@ -5,6 +5,7 @@
 namespace Shooter {
     LevelReader::LevelReader() {
         storage_ = std::vector<LevelData>();
+        worldBound_ = Vector2(-1.0f, -1.0f);
     }
 
 	void LevelReader::ReadFile(std::string fileName) {
@@ -40,6 +41,12 @@ namespace Shooter {
 
                     getline(ss, substr, ',');
                     levelEntity.position.y = std::stof(substr);
+
+                    if (worldBound_.x > 0) {
+                        if (World::IsOutOfWorld(worldBound_, levelEntity.position)) {
+                            std::cout << "WARNING [LevelReader] Level entity at " << levelEntity.position.ToString() << ", out of world boundry." << std::endl;
+                        }
+                    }
 
                     std::string cdString = line.substr(line.find("),") + 2);
                     levelEntity.fireCD = std::stof(cdString);
