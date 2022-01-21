@@ -206,22 +206,6 @@ namespace Shooter {
 	}
 
 	void System::LoadLevelData() {
-		// Test level at idx 0
-		/*
-		LevelData singleLevelData = LevelData();
-		LevelEntity entity;
-		entity.position = Vector2(400.0f, 400.0f);
-		entity.fireCD = 2.0f;
-		singleLevelData.entities.push_back(entity);
-
-		LevelEntity entity2;
-		entity2.position = Vector2(300.0f, 500.0f);
-		entity2.fireCD = 1.5f;
-		singleLevelData.entities.push_back(entity2);
-
-		levelsData_.push_back(singleLevelData);
-		*/
-
 		// read level data from text
 		LevelReader levelReader;
 		levelReader.SetWorldBound(Vector2(kDefaultScreenWidth, kDefaultScreenHeight));
