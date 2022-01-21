@@ -7,6 +7,7 @@
 namespace Shooter {
 	System::System() {
 		gameStatus_ = GameStatus::MainMenu;
+		timeSinceMenuInput_ = sf::Time(sf::seconds(2*kMenuOperationCDSecond));
 		// init level data
 		LoadLevelData();
 
@@ -22,11 +23,13 @@ namespace Shooter {
 		inputManager_.Update(delta);
 		InputData inputData = inputManager_.GetInputData();
 
+		bool menuCanUpdate = UpddateAndCheckMenuInputCD(delta);
+
 		if (gameStatus_ == GameStatus::InGame) {
 			world_.Update(delta, inputData);
 			if (world_.IsGameEnded() && !world_.IsPlayerDead()) {
-				curLevelIdx += 1;
-				if (curLevelIdx < levelsData_.size()) {
+				curLevelIdx_ += 1;
+				if (curLevelIdx_ < levelsData_.size()) {
 					ToInbetweenLevel();
 				} else {
 					ToEndScreen();
@@ -37,8 +40,13 @@ namespace Shooter {
 				world_.Clear();
 			}
 		} else if (gameStatus_ == GameStatus::BetweenLevel) {
+			if (!menuCanUpdate) {
+				return;
+			}
+
 			if (inputData.startGame) {
-				if (curLevelIdx < levelsData_.size()) {
+				ResetMenuInputCD();
+				if (curLevelIdx_ < levelsData_.size()) {
 					ToGame();
 				} else {
 					// This should not happen
@@ -46,12 +54,22 @@ namespace Shooter {
 				}
 			}
 		} else if (gameStatus_ == GameStatus::EndScreen) {
+			if (!menuCanUpdate) {
+				return;
+			}
+
 			if (inputData.endGame) {
+				ResetMenuInputCD();
 				ToMainMenu();
 			}
 		} else if (gameStatus_ == GameStatus::MainMenu) {
+			if (!menuCanUpdate) {
+				return;
+			}
+
 			if (inputData.startGame) {
-				ToGame();
+				ResetMenuInputCD();
+				ToInbetweenLevel();
 			}
 		}
 
@@ -86,7 +104,7 @@ namespace Shooter {
 
 		world_.SetPlayer(playerEntry);
 		world_.SetSize(Vector2(kDefaultScreenWidth, kDefaultScreenHeight));
-		SetupLevel(curLevelIdx);
+		SetupLevel(curLevelIdx_);
 		inputManager_.SetPlayer(player);
 	}
 
@@ -108,7 +126,7 @@ namespace Shooter {
 		}
 
 		gameStatus_ = GameStatus::MainMenu;
-		curLevelIdx = 0;
+		curLevelIdx_ = 0;
 	}
 	
 	// Includes rendering menu UI in different game status
@@ -170,7 +188,7 @@ namespace Shooter {
 			RenderEntry titleTextEntry = RenderEntry();
 			titleTextEntry.isText = true;
 			titleTextEntry.position = Vector2(200.0f, 500.0f);
-			titleTextEntry.text = "Level " + std::to_string(curLevelIdx + 1);
+			titleTextEntry.text = "Level " + std::to_string(curLevelIdx_ + 1);
 			titleTextEntry.fontSize = 40;
 			result.push_back(titleTextEntry);
 
@@ -214,6 +232,19 @@ namespace Shooter {
 		for (int i = 0; i < levelReader.GetData().size(); ++i) {
 			levelsData_.push_back(levelReader.GetData()[i]);
 		}
+	}
+
+	bool System::UpddateAndCheckMenuInputCD(sf::Time delta) {
+		if (timeSinceMenuInput_.asSeconds() < kMenuOperationCDSecond) {
+			timeSinceMenuInput_ += delta;
+			return false;
+		}
+
+		return true;
+	}
+
+	void System::ResetMenuInputCD() {
+		timeSinceMenuInput_ = sf::Time(sf::seconds(0.0f));
 	}
 
 }

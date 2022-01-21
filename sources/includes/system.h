@@ -37,13 +37,16 @@ namespace Shooter {
 		protected:
 		private:
 			void LoadLevelData();
+			bool UpddateAndCheckMenuInputCD(sf::Time delta); // return true if CD is finished
+			void ResetMenuInputCD();
 
 			World world_;
 			InputManager inputManager_;
 			sf::Texture hpBarTexture_;
 			GameStatus gameStatus_;
 			std::vector<LevelData> levelsData_;
-			int curLevelIdx = 0;
+			int curLevelIdx_ = 0;
+			sf::Time timeSinceMenuInput_;
 
 	};
 }
