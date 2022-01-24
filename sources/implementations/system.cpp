@@ -232,6 +232,9 @@ namespace Shooter {
 		for (int i = 0; i < levelReader.GetData().size(); ++i) {
 			levelsData_.push_back(levelReader.GetData()[i]);
 		}
+
+		// Add a random level
+		levelReader.GenerateRandomLevel();
 	}
 
 	bool System::UpddateAndCheckMenuInputCD(sf::Time delta) {
