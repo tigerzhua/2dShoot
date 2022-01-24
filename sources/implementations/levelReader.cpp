@@ -60,4 +60,13 @@ namespace Shooter {
             std::cout << "[LevelReader]: Unable to open file " << fileName <<std::endl;
         }
 	}
+
+    void LevelReader::GenerateRandomLevel() {
+        LevelData curLevelData = LevelData();
+
+        srand(time(NULL));
+
+
+        storage_.push_back(curLevelData);
+    }
 }
