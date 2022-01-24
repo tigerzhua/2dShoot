@@ -30,7 +30,8 @@ namespace Shooter {
 
 		const int kMinEnemyCount = 2;
 		const int kMaxEnemyCount = 4;
-		const int kMinFireCD = 0.3f;
-		const int kMaxFireCD = 1.5f;
+		const int kMinFireCD = 1.0f;
+		const int kMaxFireCD = 2.5f;
+		const int kMargin = 150;
 	};
 }
