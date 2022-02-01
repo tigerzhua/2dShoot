@@ -135,6 +135,12 @@ namespace Shooter {
 
 		// add UI
 		if (gameStatus_ == GameStatus::InGame) {
+			// First, put background at the bottom
+			RenderEntry backgroundEntry = RenderEntry();
+			backgroundEntry.texture = world_.GetBackgroundTexture();
+			backgroundEntry.position = Vector2();
+			result.push_back(backgroundEntry);
+			
 			std::vector<UnitEntry> activeUnits = world_.GetActiveUnits();
 
 			for (unsigned int i = 0; i < activeUnits.size(); ++i) {
