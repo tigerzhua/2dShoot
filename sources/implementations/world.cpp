@@ -237,6 +237,7 @@ namespace Shooter {
 		if (useDirectionOverride) {
 			projectileDirection.Normalize();
 			projectileEntry.direction = projectileDirection;
+			AddUnitEntry(projectileEntry, true);
 		} else {
 			int pattern = host.GetStats().attackPattern;
 			if (pattern == 1) {
@@ -253,6 +254,14 @@ namespace Shooter {
 				projectileDirectionL.Normalize();
 				projectileEntryL.direction = projectileDirectionL;
 				AddUnitEntry(projectileEntryL, true);
+
+				std::string projectileIdR = host.id + "_projectile_" + std::to_string(elapsedTime_.asMicroseconds()) + "_R";
+				UnitEntry projectileEntryR = UnitEntry(projectileIdR, projectile, host.position);
+				projectileEntryR.speed = 200.0f;
+				Vector2 projectileDirectionR = Vector2(3.0, 4.0);
+				projectileDirectionR.Normalize();
+				projectileEntryR.direction = projectileDirectionR;
+				AddUnitEntry(projectileEntryR, true);
 			} else { 
 				// pattern == 0 and default
 				projectileDirection = Vector2(0.0, 1.0);
