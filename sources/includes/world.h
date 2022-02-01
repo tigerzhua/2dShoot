@@ -22,6 +22,7 @@ namespace Shooter {
 			Vector2 direction;
 			float speed;
 			float fireCD;
+			int attackPattern;  // 0: normal, 1: triple shot
 
 			UnitEntry() = delete;
 
@@ -34,6 +35,7 @@ namespace Shooter {
 				speed = 0.0f;
 				timer_ = 0.0f;
 				fireCD = 1.0f;
+				attackPattern = 0;
 				runtimeStats_ = unitRef->GetStats();
 			}
 

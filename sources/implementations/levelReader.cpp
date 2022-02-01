@@ -49,10 +49,17 @@ namespace Shooter {
                     }
 
                     std::string cdString = line.substr(line.find("),") + 2);
-                    levelEntity.fireCD = std::stof(cdString);
+                    int endIdx = cdString.find(",");
+                    levelEntity.fireCD = std::stof(cdString.substr(0, endIdx+1));
+
+                    std::string patternString = cdString.substr(cdString.find(",") + 1);
+                    levelEntity.pattern = std::stoi(patternString);
 
                     curLevelData.entities.push_back(levelEntity);
-                    std::cout<< "[LevelReader] Added new Enemy: position " << levelEntity.position.ToString() << ", Firing CD: " << levelEntity.fireCD << std::endl;
+                    std::cout<< "[LevelReader] Added new Enemy: position " << 
+                        levelEntity.position.ToString() << ", Firing CD: " << 
+                        levelEntity.fireCD << ", Pattern: " << 
+                        levelEntity.pattern << std::endl;
                 }
             }
             myfile.close();
@@ -71,6 +78,7 @@ namespace Shooter {
             levelEntity.position.x = rand() % (int)(worldBound_.x - 2 * kMargin) + (int)kMargin;
             levelEntity.position.y = rand() % (int)(worldBound_.y - 2 * kMargin) + (int)kMargin;
             levelEntity.fireCD = (float)(rand() % (int)((kMaxFireCD - kMinFireCD) * 10) + (int)(kMinFireCD * 10))/10.0f;
+            levelEntity.pattern = rand() % 1;
             curLevelData.entities.push_back(levelEntity);
         }
 

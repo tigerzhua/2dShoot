@@ -239,7 +239,7 @@ namespace Shooter {
 			projectileEntry.direction = projectileDirection;
 			AddUnitEntry(projectileEntry, true);
 		} else {
-			int pattern = host.GetStats().attackPattern;
+			int pattern = host.attackPattern;
 			if (pattern == 1) {
 				projectileDirection = Vector2(0.0, 1.0);
 				projectileDirection.Normalize();
