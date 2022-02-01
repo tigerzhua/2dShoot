@@ -19,7 +19,7 @@ namespace Shooter {
 				}
 
 				textureRef = nullptr;
-				attackPattern = 1;
+				attackPattern = 0;
 			}
 	};
 	
