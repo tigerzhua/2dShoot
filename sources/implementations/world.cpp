@@ -36,6 +36,8 @@ namespace Shooter {
 		unitEntries_ = std::map<std::string, UnitEntry>();
 		projectiles_ = std::map<std::string, UnitEntry>();
 		elapsedTime_ = sf::Time(sf::seconds(0.0f));
+
+		AssetUtils::LoadTexture("background.png", backgroundTexture_);
 	}
 
 	void World::Clear() {

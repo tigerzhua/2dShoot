@@ -73,6 +73,7 @@ namespace Shooter {
 			int GetProjectileEntryCount() { return projectiles_.size(); }
 			std::vector<UnitEntry> GetActiveUnits();
 			float GetPlayerHealthRatio();
+			sf::Texture* GetBackgroundTexture() { return &backgroundTexture_; }
 			bool IsOutOfWorld(UnitEntry& entry);
 			static bool IsOutOfWorld(Vector2 worldBound, Vector2 position);
 			bool IsGameEnded();
@@ -87,6 +88,7 @@ namespace Shooter {
 			std::map<std::string, UnitEntry> projectiles_;
 			UnitEntry* playerEntry_ = nullptr;
 			sf::Time elapsedTime_;
+			sf::Texture backgroundTexture_;
 
 			void IntroduceUnit(UnitEntry& entry);
 			void DeleteUnit(UnitEntry& entry);
