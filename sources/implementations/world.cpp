@@ -88,7 +88,7 @@ namespace Shooter {
 				} else {
 					entry.Update(delta);
 					if (entry.CanFire()) {
-						Fire(entry, Unit::GetDefaultEnemyProjectile(), Vector2(0.0f, 1.0f));
+						Fire(entry, Unit::GetDefaultEnemyProjectile());
 					}
 				}
 			}
@@ -130,7 +130,7 @@ namespace Shooter {
 			playerEntry_->Update(delta);
 
 			if (inputData.fire && playerEntry_->CanFire()) {
-				Fire(*playerEntry_, Unit::GetDefaultPlayerProjectile(), Vector2(0.0f, -1.0f));
+				Fire(*playerEntry_, Unit::GetDefaultPlayerProjectile(), true, Vector2(0.0f, -1.0f));
 			}
 		}
 
@@ -228,15 +228,39 @@ namespace Shooter {
 		entry.SetAlive(false);
 	}
 
-	void World::Fire(UnitEntry& host, Unit* projectile, Vector2 projectileDirection) {
+	void World::Fire(UnitEntry& host, Unit* projectile, bool useDirectionOverride, Vector2 projectileDirection) {
 		host.ResetTimer();
 		std::string projectileId = host.id + "_projectile_" + std::to_string(elapsedTime_.asMicroseconds());
 		UnitEntry projectileEntry = UnitEntry(projectileId, projectile, host.position);
 		projectileEntry.speed = 200.0f;
-		projectileDirection.Normalize();
-		projectileEntry.direction = projectileDirection;
 
-		AddUnitEntry(projectileEntry, true);
+		if (useDirectionOverride) {
+			projectileDirection.Normalize();
+			projectileEntry.direction = projectileDirection;
+		} else {
+			int pattern = host.GetStats().attackPattern;
+			if (pattern == 1) {
+				projectileDirection = Vector2(0.0, 1.0);
+				projectileDirection.Normalize();
+				projectileEntry.direction = projectileDirection;
+				AddUnitEntry(projectileEntry, true);
+
+				// 2 more shots
+				std::string projectileIdL = host.id + "_projectile_" + std::to_string(elapsedTime_.asMicroseconds()) + "_L";
+				UnitEntry projectileEntryL = UnitEntry(projectileIdL, projectile, host.position);
+				projectileEntryL.speed = 200.0f;
+				Vector2 projectileDirectionL = Vector2(-3.0, 4.0);
+				projectileDirectionL.Normalize();
+				projectileEntryL.direction = projectileDirectionL;
+				AddUnitEntry(projectileEntryL, true);
+			} else { 
+				// pattern == 0 and default
+				projectileDirection = Vector2(0.0, 1.0);
+				projectileDirection.Normalize();
+				projectileEntry.direction = projectileDirection;
+				AddUnitEntry(projectileEntry, true);
+			}
+		}
 	}
 
 	bool World::IsOutOfWorld(UnitEntry& entry) {

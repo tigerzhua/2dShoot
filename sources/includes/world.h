@@ -67,7 +67,7 @@ namespace Shooter {
 			void SetPlayerDirection(Vector2 newDir) { playerEntry_->direction = newDir; }
 			void AddUnitEntry(UnitEntry unitEntry, bool projectile);
 			void RemoveDeadUnit(std::vector<std::string>& toRemove, std::vector<std::string>& toRemoveProjectile);
-			void Fire(UnitEntry& host, Unit* projectile, Vector2 projectileDirection);
+			void Fire(UnitEntry& host, Unit* projectile, bool useDirectionOverride = false, Vector2 projectileDirection = Vector2());
 
 			int GetUnitEntryCount() { return unitEntries_.size(); }
 			int GetProjectileEntryCount() { return projectiles_.size(); }

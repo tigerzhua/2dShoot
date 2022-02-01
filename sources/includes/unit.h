@@ -9,6 +9,7 @@ namespace Shooter {
 			float hp;
 			float damage;
 			sf::Texture* textureRef = nullptr;
+			int attackPattern; // 0: normal, 1: triple shot
 
 			UnitStats() {
 				hp = 10.0f;
@@ -18,6 +19,7 @@ namespace Shooter {
 				}
 
 				textureRef = nullptr;
+				attackPattern = 1;
 			}
 	};
 	
