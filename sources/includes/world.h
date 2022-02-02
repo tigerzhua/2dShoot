@@ -22,6 +22,7 @@ namespace Shooter {
 			Vector2 direction;
 			float speed;
 			float fireCD;
+			int attackPattern;  // 0: normal, 1: triple shot, 2: double shot
 
 			UnitEntry() = delete;
 
@@ -34,6 +35,7 @@ namespace Shooter {
 				speed = 0.0f;
 				timer_ = 0.0f;
 				fireCD = 1.0f;
+				attackPattern = 0;
 				runtimeStats_ = unitRef->GetStats();
 			}
 
@@ -67,7 +69,7 @@ namespace Shooter {
 			void SetPlayerDirection(Vector2 newDir) { playerEntry_->direction = newDir; }
 			void AddUnitEntry(UnitEntry unitEntry, bool projectile);
 			void RemoveDeadUnit(std::vector<std::string>& toRemove, std::vector<std::string>& toRemoveProjectile);
-			void Fire(UnitEntry& host, Unit* projectile, Vector2 projectileDirection);
+			void Fire(UnitEntry& host, Unit* projectile, bool useDirectionOverride = false, Vector2 projectileDirection = Vector2());
 
 			int GetUnitEntryCount() { return unitEntries_.size(); }
 			int GetProjectileEntryCount() { return projectiles_.size(); }

@@ -88,7 +88,7 @@ namespace Shooter {
 				} else {
 					entry.Update(delta);
 					if (entry.CanFire()) {
-						Fire(entry, Unit::GetDefaultEnemyProjectile(), Vector2(0.0f, 1.0f));
+						Fire(entry, Unit::GetDefaultEnemyProjectile());
 					}
 				}
 			}
@@ -130,7 +130,7 @@ namespace Shooter {
 			playerEntry_->Update(delta);
 
 			if (inputData.fire && playerEntry_->CanFire()) {
-				Fire(*playerEntry_, Unit::GetDefaultPlayerProjectile(), Vector2(0.0f, -1.0f));
+				Fire(*playerEntry_, Unit::GetDefaultPlayerProjectile(), true, Vector2(0.0f, -1.0f));
 			}
 		}
 
@@ -228,15 +228,64 @@ namespace Shooter {
 		entry.SetAlive(false);
 	}
 
-	void World::Fire(UnitEntry& host, Unit* projectile, Vector2 projectileDirection) {
+	void World::Fire(UnitEntry& host, Unit* projectile, bool useDirectionOverride, Vector2 projectileDirection) {
 		host.ResetTimer();
 		std::string projectileId = host.id + "_projectile_" + std::to_string(elapsedTime_.asMicroseconds());
 		UnitEntry projectileEntry = UnitEntry(projectileId, projectile, host.position);
 		projectileEntry.speed = 200.0f;
-		projectileDirection.Normalize();
-		projectileEntry.direction = projectileDirection;
 
-		AddUnitEntry(projectileEntry, true);
+		if (useDirectionOverride) {
+			projectileDirection.Normalize();
+			projectileEntry.direction = projectileDirection;
+			AddUnitEntry(projectileEntry, true);
+		} else {
+			int pattern = host.attackPattern;
+			if (pattern == 1) {
+				projectileDirection = Vector2(0.0, 1.0);
+				projectileDirection.Normalize();
+				projectileEntry.direction = projectileDirection;
+				AddUnitEntry(projectileEntry, true);
+
+				// 2 more shots
+				std::string projectileIdL = host.id + "_projectile_" + std::to_string(elapsedTime_.asMicroseconds()) + "_L";
+				UnitEntry projectileEntryL = UnitEntry(projectileIdL, projectile, host.position);
+				projectileEntryL.speed = 200.0f;
+				Vector2 projectileDirectionL = Vector2(-3.0, 4.0);
+				projectileDirectionL.Normalize();
+				projectileEntryL.direction = projectileDirectionL;
+				AddUnitEntry(projectileEntryL, true);
+
+				std::string projectileIdR = host.id + "_projectile_" + std::to_string(elapsedTime_.asMicroseconds()) + "_R";
+				UnitEntry projectileEntryR = UnitEntry(projectileIdR, projectile, host.position);
+				projectileEntryR.speed = 200.0f;
+				Vector2 projectileDirectionR = Vector2(3.0, 4.0);
+				projectileDirectionR.Normalize();
+				projectileEntryR.direction = projectileDirectionR;
+				AddUnitEntry(projectileEntryR, true);
+			} else if (pattern == 2) {
+				std::string projectileIdL = host.id + "_projectile_" + std::to_string(elapsedTime_.asMicroseconds()) + "_L";
+				UnitEntry projectileEntryL = UnitEntry(projectileIdL, projectile, Vector2(host.position.x - 7, host.position.y));
+				projectileEntryL.speed = 300.0f;
+				Vector2 projectileDirectionL = Vector2(0.0, 1.0);
+				projectileDirectionL.Normalize();
+				projectileEntryL.direction = projectileDirectionL;
+				AddUnitEntry(projectileEntryL, true);
+
+				std::string projectileIdR = host.id + "_projectile_" + std::to_string(elapsedTime_.asMicroseconds()) + "_R";
+				UnitEntry projectileEntryR = UnitEntry(projectileIdR, projectile, Vector2(host.position.x + 7, host.position.y));
+				projectileEntryR.speed = 300.0f;
+				Vector2 projectileDirectionR = Vector2(0.0, 1.0);
+				projectileDirectionR.Normalize();
+				projectileEntryR.direction = projectileDirectionR;
+				AddUnitEntry(projectileEntryR, true);
+			} else { 
+				// pattern == 0 and default
+				projectileDirection = Vector2(0.0, 1.0);
+				projectileDirection.Normalize();
+				projectileEntry.direction = projectileDirection;
+				AddUnitEntry(projectileEntry, true);
+			}
+		}
 	}
 
 	bool World::IsOutOfWorld(UnitEntry& entry) {

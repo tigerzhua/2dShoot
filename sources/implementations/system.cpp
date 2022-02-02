@@ -221,6 +221,7 @@ namespace Shooter {
 			std::string enemyId = "Enemy" + std::to_string(i);
 			UnitEntry enemy = UnitEntry(enemyId, enemyUnitRef, levelsData_[idx].entities[i].position);
 			enemy.fireCD = levelsData_[idx].entities[i].fireCD;
+			enemy.attackPattern = levelsData_[idx].entities[i].pattern;
 			world_.AddUnitEntry(enemy, false);
 		}
 	}

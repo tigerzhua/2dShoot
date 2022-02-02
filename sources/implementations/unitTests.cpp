@@ -194,7 +194,7 @@ namespace Shooter {
 		World testWorld = World();
 		Unit unitRef = Unit();
 		UnitEntry testEntry = UnitEntry("testId", &unitRef, Vector2());
-		testWorld.Fire(testEntry, Unit::GetDefaultEnemyProjectile(), Vector2(0.0f, 1.0f));
+		testWorld.Fire(testEntry, Unit::GetDefaultEnemyProjectile(), true, Vector2(0.0f, 1.0f));
 
 		SINGLE_TEST_HEADER(1)
 		int result = 1;

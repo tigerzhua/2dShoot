@@ -47,6 +47,7 @@ namespace Shooter {
 	struct LevelEntity {
 		Vector2 position;
 		float fireCD;
+		int pattern;
 	};
 
 	struct LevelData {
