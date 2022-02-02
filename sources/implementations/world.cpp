@@ -262,6 +262,22 @@ namespace Shooter {
 				projectileDirectionR.Normalize();
 				projectileEntryR.direction = projectileDirectionR;
 				AddUnitEntry(projectileEntryR, true);
+			} else if (pattern == 2) {
+				std::string projectileIdL = host.id + "_projectile_" + std::to_string(elapsedTime_.asMicroseconds()) + "_L";
+				UnitEntry projectileEntryL = UnitEntry(projectileIdL, projectile, Vector2(host.position.x - 7, host.position.y));
+				projectileEntryL.speed = 300.0f;
+				Vector2 projectileDirectionL = Vector2(0.0, 1.0);
+				projectileDirectionL.Normalize();
+				projectileEntryL.direction = projectileDirectionL;
+				AddUnitEntry(projectileEntryL, true);
+
+				std::string projectileIdR = host.id + "_projectile_" + std::to_string(elapsedTime_.asMicroseconds()) + "_R";
+				UnitEntry projectileEntryR = UnitEntry(projectileIdR, projectile, Vector2(host.position.x + 7, host.position.y));
+				projectileEntryR.speed = 300.0f;
+				Vector2 projectileDirectionR = Vector2(0.0, 1.0);
+				projectileDirectionR.Normalize();
+				projectileEntryR.direction = projectileDirectionR;
+				AddUnitEntry(projectileEntryR, true);
 			} else { 
 				// pattern == 0 and default
 				projectileDirection = Vector2(0.0, 1.0);

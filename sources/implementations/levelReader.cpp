@@ -78,7 +78,7 @@ namespace Shooter {
             levelEntity.position.x = rand() % (int)(worldBound_.x - 2 * kMargin) + (int)kMargin;
             levelEntity.position.y = rand() % (int)(worldBound_.y - 2 * kMargin) + (int)kMargin;
             levelEntity.fireCD = (float)(rand() % (int)((kMaxFireCD - kMinFireCD) * 10) + (int)(kMinFireCD * 10))/10.0f;
-            levelEntity.pattern = rand() % 1;
+            levelEntity.pattern = rand() % 3;
             curLevelData.entities.push_back(levelEntity);
         }
 

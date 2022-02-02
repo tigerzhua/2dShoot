@@ -22,7 +22,7 @@ namespace Shooter {
 			Vector2 direction;
 			float speed;
 			float fireCD;
-			int attackPattern;  // 0: normal, 1: triple shot
+			int attackPattern;  // 0: normal, 1: triple shot, 2: double shot
 
 			UnitEntry() = delete;
 
